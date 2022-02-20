@@ -9,13 +9,11 @@ import org.zerock.domain.ReplyVO;
 import org.zerock.mapper.ReplyMapper;
 import org.zerock.domain.ReplyPageDTO;
 
-import lombok.AllArgsConstructor;
-
 import java.util.List;
 
 @Service
 @Log4j
-public class ReplySserviceImpl {
+public class ReplyServiceImpl {
 
     @Setter(onMethod_ = @Autowired)
     private ReplyMapper mapper;
@@ -54,6 +52,13 @@ public class ReplySserviceImpl {
 
         log.info("get Reply List of a Board" + bno);
         return mapper.getListWithPaging(cri, bno);
+    }
+
+    @Override
+    public ReplyPageDTO getListPage(Criteria cri, Long bno) {
+
+        return new ReplyPageDTO(mapper.getCountByBno(bno),
+                mapper.getListWithPaging(cri, bno));
     }
 
 }
